@@ -2,10 +2,9 @@ mod empty;
 mod room;
 mod automata;
 mod drunkard;
+mod prefab;
 
-use std::thread::spawn;
-
-use crate::{map_builder::{automata::CellularAutomataArchitect, drunkard::DrunkardsWalkArchitect, room::RoomsArchitect}, prelude::*};
+use crate::{map_builder::{automata::CellularAutomataArchitect, drunkard::DrunkardsWalkArchitect, prefab::apply_prefab, room::RoomsArchitect}, prelude::*};
 const NUM_ROOMS: usize = 20;
 
 pub struct MapBuilder {
@@ -28,6 +27,7 @@ impl MapBuilder {
             _ => Box::new(CellularAutomataArchitect{}),
         };
         let mut mb = architect.new(rng);
+        apply_prefab(&mut mb, rng);
         mb
     }
 
